@@ -47,7 +47,7 @@ For an overlayed drop menu:
                 margin-left:-10px ;
                 margin-top: -20px ;
                 margin-right: 12px ;
-                color:gray ;
+                color:var(--content-color2) ;
                 border-radius: 100% ;
             }
             paper-icon-button:hover{
@@ -57,10 +57,11 @@ For an overlayed drop menu:
                 margin-bottom: 30px ;
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
-                color: var(--title-color);
+                color: var(--content-color2);
             }
             [title]{
                 width: 100% ;
+                color:var(--content-color2) ;
                 @apply(--layout-center-justified);
                 @apply(--layout-horizontal);
             }
@@ -72,10 +73,10 @@ For an overlayed drop menu:
                 [section-title] {
                     margin-bottom: 20px;
                     border-radius: 5px ;
-                    opacity: 0.8;
+                    opacity: 0.94;
                     text-align:justified ;
-                    background-color: var(--close-color) ;
-                    color:white ;
+                    background-color: var(--close-color2) ;
+                    color:var(--content-background) ;
                     position: relative;
                     padding-right:20px ;
                     padding-left:20px ;
@@ -100,6 +101,7 @@ For an overlayed drop menu:
                     height: 400px;
                     overflow: auto;
                     border-radius: 10px;
+                    background-color: var(--content-background);
                 }
                 [spinner] {
                     height: 80%;
