@@ -1,7 +1,6 @@
 <imports >
     <link rel="import" href="../polymer/polymer.html">
     <link rel="import" href="../iron-ajax/iron-ajax.html" async>
-    <link rel="import" href="../paper-spinner/paper-spinner-lite.html" async>
     <link rel="import" href="../paper-dialog/paper-dialog.html">
     <link rel="import" href="../paper-ripple/paper-ripple.html" async>
     <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -92,6 +91,7 @@ For an overlayed drop menu:
                 }
                 paper-dialog {
                     top: 10vh;
+                    will-change:transform ;
                     font-size: 22px;
                     font-weight: 300;
                     width: 500px;
@@ -107,6 +107,10 @@ For an overlayed drop menu:
                     @apply(--layout-horizontal);
                     @apply(--layout-center-justified);
                     @apply(--layout-center);
+                }
+                [wrapper]{
+                    will-change:transform ;
+                    z-index: 200 ;
                 }
             </style>
         </styles>
@@ -164,9 +168,7 @@ For an overlayed drop menu:
             open: function () {
                 var other = this.collections;
                 this.collections = [];
-                this.async(function () {
-                    this.collections = other;
-                }, 100);
+                this.collections = other;
                 this.$.dialog.open();
             },
             close: function () {
