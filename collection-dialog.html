@@ -1,5 +1,5 @@
 <imports >
-    <link rel="import" href="../polymer/polymer.html">
+    <link rel="import" href="../polymer/polymer-element.html">
     <link rel="import" href="../paper-dialog/paper-dialog.html">
     <link rel="import" href="../paper-ripple/paper-ripple.html" async>
     <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -12,31 +12,7 @@
     <link rel="import" href="../iron-icons/communication-icons.html">
     <link rel="import" href="../ajax-manager/ajax-manager.html">
 </imports>
-<!--
 
-Shows drop down menu (works on chrome)
-
-### Usage
-The list displayed in the drop down menu can be set as an attribute.
-
-    <drop-menu list-items='["first" ,"second"]'></drop-menu>
-
-For an overlayed drop menu:
-
-    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
-
-### Styling
- Custom property | Description | Default
-----------------|-------------|----------
-`--item-background-color` | List item backround color | `#f1ecef`
-`--item-color` | List item color used for fonts | `#302f31`
-`--theme-color1` | Icon button hover color | `4775D1`
-`--content-background` | Drop menu's background color | `white`
-`--theme-color1` | Icon button hover color | `4775D1`
-`--icon-button` | Mixin applied the icon button | `{}`
-
-@demo demo/drop-menu-demo.html
--->
 <dom-module id="collection-dialog">
     <template>
         <styles>
@@ -53,15 +29,15 @@ For an overlayed drop menu:
                 }
                 [dialog-title] {
                     margin-bottom: 30px;
-                    @apply(--layout-horizontal);
-                    @apply(--layout-center);
+                    @apply --layout-horizontal;
+                    @apply --layout-center;
                     color: var(--content-color2,#636363);
                 }
                 [title] {
                     width: 100%;
                     color: var(--content-color2,#636363);
-                    @apply(--layout-center-justified);
-                    @apply(--layout-horizontal);
+                    @apply --layout-center-justified;
+                    @apply --layout-horizontal;
                 }
                 [exit-button-invisible] {
                     visibility: hidden;
@@ -103,9 +79,9 @@ For an overlayed drop menu:
                     height: 80%;
                     width: 100%;
                     margin-top: 100px;
-                    @apply(--layout-horizontal);
-                    @apply(--layout-center-justified);
-                    @apply(--layout-center);
+                    @apply --layout-horizontal;
+                    @apply --layout-center-justified;
+                    @apply --layout-center;
                 }
                 [wrapper]{
                     will-change:transform ;
@@ -144,35 +120,36 @@ For an overlayed drop menu:
         </paper-dialog>
     </template>
     <script>
-        Polymer({
-            is: "collection-dialog",
-            observers: [],
-            behaviors: [],
-            listeners: {},
-            properties: {
+        class CollectionDialog extends Polymer.Element {
+            static get is() { return 'collection-dialog'; }
+            static get properties() {return {
                 collections: {
                     observer: '_updateList'
                 }
-            },
-            _updateList: function () {
+            }}
+            constructor() {
+                super();
+            }
+            _updateList () {
                 this.$.domRepeat.render();
-            },
-            _addToCollection: function (e) {
-                this.fire('select-collection', {
+            }
+            _addToCollection (e) {
+                this.dispatchEvent(new CustomEvent('select-collection', {detail:{
                     id: e.currentTarget.id,
-                    name: this.$$('#' + e.currentTarget.id).collectionName
-                });
+                    name: this.shadowRoot.querySelector('#' + e.currentTarget.id).collectionName
+                }, bubbles: true, composed: true }));
                 this.close();
-            },
-            open: function () {
+            }
+            open () {
                 var other = this.collections;
                 this.collections = [];
                 this.collections = other;
                 this.$.dialog.open();
-            },
-            close: function () {
+            }
+            close () {
                 this.$.dialog.close();
             }
-        });
+        }
+        customElements.define('collection-dialog', CollectionDialog);
     </script>
 </dom-module>
